@@ -1,0 +1,59 @@
+.window {
+    position: absolute;
+    top: 10vh;
+    left: 7vw;
+    width: 1280px;
+    height: 720px;
+    border-radius: 10px;
+}
+
+.window-blur {
+    position: absolute;
+    right: 0;
+    left: 230px;
+    height: 100%;
+    backdrop-filter: blur(50px);
+}
+
+.window-nav {
+    position: absolute;
+    left: 0;
+    right: calc(854px - 230px);
+    top: 0;
+    height: 100%;
+}
+
+.window-titlebar {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 35px;
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.window-button {
+    width: 15px;
+    height: 15px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-right: 7px;
+}
+
+.window-titlebar span {
+    margin-bottom: -3px;
+    font-size: 17px;
+}
+
+.red {
+    background-color: #7d0000;
+}
+
+.yellow {
+    background-color: #7d7d00;
+}
+
+.green {
+    background-color: #007d00;
+}
