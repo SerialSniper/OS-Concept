@@ -15,6 +15,7 @@
 
 .app-icon:hover, .group-icon:hover, .app-group:hover {
     background-color: #cfcfcf33;
+    border-radius: 10px;
 }
 
 .app-icon img {
