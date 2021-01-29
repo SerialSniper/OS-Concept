@@ -35,9 +35,16 @@ $(document).ready(function() {
         $(this).css("transform", "translateX(" + -$(this).width() + "px)");
     });
     
+    $(".app-icon").hover(function() {
+        $(this).find(".active-line").addClass("active-line-hover");
+    }, function() {
+        $(this).find(".active-line").removeClass("active-line-hover");
+    });
+
     $(".app-group").hover(function() {
         let x = $(this).find(".group-content");
 
+        $(this).find(".group-icon").addClass("group-icon-dark");
         $(this).find(".group-content-clipper").width(x.width());
 
         x.show();
@@ -51,6 +58,8 @@ $(document).ready(function() {
         x.css("opacity", 0);
         x.css("transform", "translateX(" + -x.width() + "px)");
         $(this).find(".group-content-clipper").width(0);
+        
+        $(this).find(".group-icon").removeClass("group-icon-dark");
 
         setTimeout(function() {
             x.hide();

@@ -4,6 +4,7 @@
     float: left;
     background-color: #cfcfcf00;
     transition: .2s;
+    border-radius: 10px;
 }
 
 .app-icon, .group-icon {
@@ -13,9 +14,18 @@
     box-sizing: border-box;
 }
 
+/* .app-group {
+    border-radius: 10px;
+    overflow: hidden;
+} */
+
+.app-icon {
+    position: relative;
+    border-bottom: solid transparent 2px;
+}
+
 .app-icon:hover, .group-icon:hover, .app-group:hover {
     background-color: #cfcfcf33;
-    border-radius: 10px;
 }
 
 .app-icon img {
@@ -25,6 +35,10 @@
 .app-group {
     height: 40px;
     display: flex;
+}
+
+.group-icon-dark {
+    background-color: #cfcfcf55;
 }
 
 .group-content, .group-content-clipper {
@@ -48,4 +62,26 @@
     max-width: 50%;
     display: inline;
     float: left;
+}
+
+.active-container {
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    right: 0;
+    height: 3px;
+    display: flex;
+    justify-content: center;
+}
+
+.active-line {
+    height: 100%;
+    width: 40%;
+    background-color: tomato;
+    border-radius: 10px 10px 0 0;
+    transition: .5s;
+}
+
+.active-line-hover {
+    width: 60%;
 }
