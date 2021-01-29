@@ -4,7 +4,7 @@
     position: absolute;
     top: 30px;
     right: 10px;
-    width: 400px;
+    width: 380px;
     backdrop-filter: blur(25px);
     border-radius: 10px;
     box-shadow: 0 0px 30px 5px black;
@@ -14,11 +14,15 @@
     font-size: 20px;
 }
 
+.mixer .darkener {
+    padding: 5px 10px 10px 10px;
+    box-sizing: border-box;
+}
+
 .mixer-channel {
     width: 100%;
-    height: 75px;
-    display: flex;
-    align-items: center;
+    height: 50px;
+    position: relative;
 }
 
 .mixer-channel * {
@@ -31,15 +35,32 @@
 
 .volume-indicator {
     height: 100%;
-    width: 75px;
+    width: 50px;
+    font-size: 35px;
+    float: right;
+}
+
+.volume-indicator-inner {
+    height: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
 }
 
 .slider-container {
     width: 250px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.slider-container-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .mixer-slider {
@@ -49,20 +70,27 @@
 
 .db-container {
     width: 100%;
-    height: 10px;
+    height: 15px;
+    position: relative;
 }
 
 .db-indicator {
-    position: relative;
-    overflow: auto;
+    position: absolute;
     width: 100%;
     height: 5px;
+}
+
+.db-indicator-inner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
     background-color: #757575;
     border-radius: 100px;
 }
 
 .db-indicator-2 {
-    top: -5px;
+    top: 10px;
 }
 
 .db-danger {

@@ -16,7 +16,46 @@ function updateTime() {
         useGrouping: false
     });
     $("#date").text(`${hours}:${mins}:${secs}`);
-    setTimeout(updateTime, 1);
 }
 
-setTimeout(updateTime, 1);
+function updateVolume() {
+    $(".volume-indicator-inner").text($("#slider").val());
+}
+
+function main() {
+    updateTime();
+    updateVolume();
+    setTimeout(main, 1);
+}
+
+$(document).ready(function() {
+    $(".group-content").hide();
+    $(".group-content").css("opacity", 0);
+    $(".group-content").each(function() {
+        $(this).css("transform", "translateX(" + -$(this).width() + "px)");
+    });
+    
+    $(".app-group").hover(function() {
+        let x = $(this).find(".group-content");
+
+        $(this).find(".group-content-clipper").width(x.width());
+
+        x.show();
+        
+        x.css("opacity", 1);
+        x.css("transform", "translateX(0)");
+
+    }, function() {
+        let x = $(this).find(".group-content");
+
+        x.css("opacity", 0);
+        x.css("transform", "translateX(" + -x.width() + "px)");
+        $(this).find(".group-content-clipper").width(0);
+
+        setTimeout(function() {
+            x.hide();
+        }, 500);
+    });
+});
+
+main();

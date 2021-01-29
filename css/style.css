@@ -2,6 +2,7 @@
 @import url("colors.css");
 @import url("window.css");
 @import url("mixer.css");
+@import url("taskbar.css");
 
 body {
     background-repeat: no-repeat;
@@ -14,6 +15,8 @@ body {
     color: #CFCFCF;
     font-size: 12px;
     font-family: Arial;
+
+    overflow: hidden;
 }
 
 header {
