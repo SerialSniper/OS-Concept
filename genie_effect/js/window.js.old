@@ -1,0 +1,101 @@
+class Window {
+    static x = 200;
+    static y = 50;
+    static width = 640;
+    static height = 480;
+
+    static top = this.y;
+    static bottom = this.y + this.height;
+    static left = this.x;
+    static right = this.x + this.width;
+
+    static sin(n) {
+        return Math.sin(n * Math.PI / 180);
+    }
+
+    static drawPixel(ctx, x, y) {
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + 1, y + 1);
+        ctx.stroke();
+    }
+
+    static async animate(canvas, ctx) {
+        let duration = 500;
+
+        for(let i = 0; i < duration; i+= 10) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height - Icon.height);
+
+            let w;
+            let h = Icon.top - this.top;
+            let k = 180 / h;
+            
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+
+            w = (Icon.left - this.left) / duration * i;
+            for(let y = this.top, deg = -90; y <= this.bottom; y++, deg += k) {
+                ctx.lineTo(this.left + (this.sin(deg) + 1) / 2 * w, y);
+            }
+
+            w = (Icon.right - this.right) / duration * i;
+            for(let y = this.bottom, deg = 90 - (Icon.top - y) * k; y > this.top; y--, deg -= k) {
+                ctx.lineTo(this.right - 1 + (this.sin(deg) + 1) / 2 * w, y);
+            }
+
+            ctx.closePath();
+            ctx.fill();
+
+            await new Promise(r => setTimeout(r, 1));
+        }
+
+        for(let i = 0; i < duration; i+= 10) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height - Icon.height);
+
+            let w;
+            let h = Icon.top - this.top;
+            let k = 180 / h;
+            
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            
+            let animation_bottom = this.bottom + (Icon.top - this.bottom) / duration * i + 3;
+
+            w = Icon.left - this.left;
+            for(let y = this.top, deg = -90; y <= animation_bottom; y++, deg += k) {
+                ctx.lineTo(this.left + (this.sin(deg) + 1) / 2 * w, y);
+            }
+
+            w = Icon.right - this.right;
+            for(let y = animation_bottom, deg = 90 - (Icon.top - y) * k; y > this.top; y--, deg -= k) {
+                ctx.lineTo(this.right - 1 + (this.sin(deg) + 1) / 2 * w, y);
+            }
+
+            ctx.closePath();
+            ctx.fill();
+            
+            await new Promise(r => setTimeout(r, 1));
+        }
+        
+        // ctx.lineTo(this.x, this.y + this.height);
+        // ctx.lineTo(this.x + this.width, this.y + this.height);
+        // ctx.lineTo(this.x + this.width, this.y);
+    }
+
+    static draw(canvas, ctx) {
+        ctx.fillStyle = '#f00';
+        
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        this.animate(canvas, ctx);
+
+        // w = Icon.left - this.left;
+        // for(let y = this.top, deg = -90; y < (this.top + h); y++, deg += k) {
+        //     this.drawPixel(ctx, this.left + (this.sin(deg) + 1) / 2 * w, y);
+        // }
+
+        // w = Icon.right - this.right;
+        // for(let y = this.top, deg = -90; y < (this.top + h); y++, deg += k) {
+        //     this.drawPixel(ctx, this.right - 1 + (this.sin(deg) + 1) / 2 * w, y);
+        // }
+    }
+}
