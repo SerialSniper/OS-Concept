@@ -2,7 +2,7 @@ class Window {
     static x = 200;
     static y = 50;
     static width = 640;
-    static height = 480;
+    static height = 360;
 
     static top = this.y;
     static bottom = this.y + this.height;
@@ -42,24 +42,18 @@ class Window {
             this.right_vertices[y] = this.sin(deg) * w;
     }
 
-    static async renderFrame(canvas, ctx) {
-
-    }
-
     static async animate(canvas, ctx) {
         this.genVertices();
 
         let duration = 500;
 
-        for(let i = 0, j = 0, k = 0; i <= duration * 3; i += 10) {
+        for(let i = 0, j = 0, k = 0; i <= duration * 2; i += 10) {
             if(i >= 0 && i <= duration)
                 this.animation_width = i;
             
             if(i >= duration * 0.8 && i <= duration * 2)
-                this.animation_bottom = Math.round(this.height + (Icon.top - this.bottom) / duration * (j += 10));
-
-            if(i >= duration * 1.3 && i <= duration * 3)
-                this.animation_top = Math.round((Icon.top - this.top) / duration * (k += 10));
+            this.animation_top = Math.round((Icon.top - this.top) / duration * (k += 10));
+                this.animation_bottom = this.animation_top + this.height;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height - Icon.height);
 
