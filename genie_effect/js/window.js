@@ -45,20 +45,53 @@ class Window {
     }
 
     static async animate(canvas, ctx) {
-        for(let i = 0, j = 0, k = 0; i <= this.duration * 2; i += 10) {
+        for(let i = 0, j = 0; i <= this.duration * 2; i += 10) {
             ctx.fillStyle = '#f00';
 
             if(i >= 0 && i <= this.duration)
                 this.animation_width = i;
             
             if(i >= this.duration * 0.8 && i <= this.duration * 2)
-            this.animation_top = Math.round((Icon.top - this.top) / this.duration * (k += 10));
-                this.animation_bottom = this.animation_top + this.height;
+                this.animation_top = Math.round((Icon.top - this.top) / this.duration * (j += 10));
+
+            this.animation_bottom = this.animation_top + this.height;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height - Icon.height);
 
             ctx.beginPath();
-            ctx.moveTo(this.left_vertices[0], this.animation_top + this.top);
+            ctx.moveTo(this.left + this.left_vertices[0], this.animation_top + this.top);
+
+            for(let y = this.animation_top; y <= this.animation_bottom; y++)
+                ctx.lineTo(this.left + this.left_vertices[y] / this.duration * this.animation_width, y + this.top);
+
+            for(let y = this.animation_bottom; y >= this.animation_top; y--)
+                ctx.lineTo(this.right + this.right_vertices[y] / this.duration * this.animation_width, y + this.top);
+
+            ctx.closePath();
+            ctx.fill();
+            
+            // this.outLine(canvas, ctx);
+
+            await new Promise(r => setTimeout(r, 1));
+        }
+    }
+
+    static async animateUp(canvas, ctx) {
+        for(let i = this.duration * 2, j = (this.duration * 1.2 + 10); i >= 0; i -= 10) {
+            ctx.fillStyle = '#f00';
+
+            if(i >= 0 && i <= this.duration)
+                this.animation_width = i;
+            
+            if(i >= this.duration * 0.8 && i <= this.duration * 2)
+                this.animation_top = Math.round((Icon.top - this.top) / this.duration * (j -= 10));
+                
+            this.animation_bottom = this.animation_top + this.height;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height - Icon.height);
+
+            ctx.beginPath();
+            ctx.moveTo(this.left + this.left_vertices[0], this.animation_top + this.top);
 
             for(let y = this.animation_top; y <= this.animation_bottom; y++)
                 ctx.lineTo(this.left + this.left_vertices[y] / this.duration * this.animation_width, y + this.top);
@@ -103,7 +136,10 @@ class Window {
         $(document).on("click", function() {
             if(!this.done) {
                 Window.animate(canvas, ctx);
-                this.done = true
+                this.done = true;
+            } else {
+                Window.animateUp(canvas, ctx);
+                this.done = false;
             }
         });
     }
