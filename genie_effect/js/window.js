@@ -17,6 +17,8 @@ class Window {
     static animation_width = 0;
 
     static done = false;
+    
+    static duration = 500;
 
     static sin(n) {
         return (Math.sin(n * Math.PI / 180) + 1) / 2;
@@ -43,16 +45,14 @@ class Window {
     }
 
     static async animate(canvas, ctx) {
-        this.genVertices();
+        for(let i = 0, j = 0, k = 0; i <= this.duration * 2; i += 10) {
+            ctx.fillStyle = '#f00';
 
-        let duration = 500;
-
-        for(let i = 0, j = 0, k = 0; i <= duration * 2; i += 10) {
-            if(i >= 0 && i <= duration)
+            if(i >= 0 && i <= this.duration)
                 this.animation_width = i;
             
-            if(i >= duration * 0.8 && i <= duration * 2)
-            this.animation_top = Math.round((Icon.top - this.top) / duration * (k += 10));
+            if(i >= this.duration * 0.8 && i <= this.duration * 2)
+            this.animation_top = Math.round((Icon.top - this.top) / this.duration * (k += 10));
                 this.animation_bottom = this.animation_top + this.height;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height - Icon.height);
@@ -61,22 +61,45 @@ class Window {
             ctx.moveTo(this.left_vertices[0], this.animation_top + this.top);
 
             for(let y = this.animation_top; y <= this.animation_bottom; y++)
-                ctx.lineTo(this.left + this.left_vertices[y] / duration * this.animation_width, y + this.top);
+                ctx.lineTo(this.left + this.left_vertices[y] / this.duration * this.animation_width, y + this.top);
 
             for(let y = this.animation_bottom; y >= this.animation_top; y--)
-                ctx.lineTo(this.right + this.right_vertices[y] / duration * this.animation_width, y + this.top);
+                ctx.lineTo(this.right + this.right_vertices[y] / this.duration * this.animation_width, y + this.top);
 
             ctx.closePath();
             ctx.fill();
+            
+            // this.outLine(canvas, ctx);
 
             await new Promise(r => setTimeout(r, 1));
         }
+    }
+
+    static outLine(canvas, ctx) {
+        ctx.fillStyle = '#000';
+
+        ctx.moveTo(this.left, this.top);
+        
+        for(let y = 0; y <= this.left_vertices.length; y++)
+            ctx.lineTo(this.left + this.left_vertices[y], y + this.top);
+
+        ctx.stroke();
+        
+        ctx.moveTo(this.right, this.top);
+
+        for(let y = 0; y <= this.right_vertices.length; y++)
+            ctx.lineTo(this.right + this.right_vertices[y], y + this.top);
+
+        ctx.stroke();
     }
 
     static draw(canvas, ctx) {
         ctx.fillStyle = '#f00';
         ctx.fillRect(this.x, this.y, this.width, this.height);
         
+        this.genVertices();
+        // this.outLine(canvas, ctx);
+
         $(document).on("click", function() {
             if(!this.done) {
                 Window.animate(canvas, ctx);
